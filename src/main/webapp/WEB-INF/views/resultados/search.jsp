@@ -129,6 +129,36 @@
 			                    </select>
 			                  </div>
 		                  </div>
+		                  <div class="form-group row">
+			                  <div class="col-sm-3">
+			                    <label><spring:message code="fluType" /></label>
+			                    <select id="fluType" name="fluType" class="form-control select2-single">
+			                    	<option value="ALL"><spring:message code="all"/></option>
+			                    	<c:forEach items="${fluTypes}" var="flu">
+			                    		<option value="${flu.catKey}"><spring:message code="${flu.messageKey}" /></option>
+									</c:forEach>
+			                    </select>
+			                  </div>
+			                  <div class="col-sm-3">
+			                    <label><spring:message code="antigen" /></label>
+			                    <select id="antigen" name="antigen" class="form-control select2-single">
+			                    	<option value="ALL"><spring:message code="all"/></option>
+			                    	<c:forEach items="${allantigens}" var="ant">
+			                    		<option value="${ant.catKey}"><spring:message code="${ant.messageKey}" /></option>
+									</c:forEach>
+			                    </select>
+			                  </div>
+			                  <div class="col-sm-3">
+			                    <label><spring:message code="result" /></label>
+			                    <select id="result" name="result" class="form-control select2-single">
+			                    	<option value="ALL"><spring:message code="all"/></option>
+			                    	<c:forEach items="${results}" var="result">
+			                    		<option value="${result.catKey}"><spring:message code="${result.messageKey}" /></option>
+									</c:forEach>
+			                    </select>
+			                  </div>			                  
+		                  </div>
+
 		                  <div class="row float-right mr-4" >  
 		                    	<button type="submit" class="btn btn-primary" id="buscarresultados""><i class="fa fa-check"></i>&nbsp;<spring:message code="search" /></button>
 				          </div>
@@ -154,10 +184,12 @@
 		                		<th><spring:message code="sampleId" /></th>
 			                    <th><spring:message code="resultDate" /></th>
 			                    <th><spring:message code="resultLab" /></th>
+			                    <th><spring:message code="fluType" /></th>
+			                    <th><spring:message code="antigen" /></th>
+			                    <th><spring:message code="result" /></th>
 			                    <th><spring:message code="status" /></th>
 			                    <th><spring:message code="sampleType" /></th>
 			                    <th><spring:message code="usrResult" /></th>
-			                    <th><spring:message code="obs" /></th>
 			                    <th><spring:message code="sampleDate" /></th>
 			                    <th><spring:message code="pasivo" /></th>
 			                    <th><spring:message code="createdBy" /></th>

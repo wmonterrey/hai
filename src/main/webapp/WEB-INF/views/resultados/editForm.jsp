@@ -12,6 +12,8 @@
 <link href="${select2css}" rel="stylesheet" type="text/css"/>
 <spring:url value="/resources/vendors/css/datepicker.css" var="datepickercss" />
 <link href="${datepickercss}" rel="stylesheet" type="text/css"/>
+
+
 </head>
 <!-- BODY options, add following classes to body to change options
 
@@ -52,7 +54,7 @@
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<spring:url value="/" htmlEscape="true "/>"><spring:message code="home" /></a></li>
-        <li class="breadcrumb-item active"><spring:message code="secondEntry" /></li>
+        <li class="breadcrumb-item active"><spring:message code="edit" /></li>
       </ol>
 	  <!-- Container -->
       <div class="container-fluid">
@@ -62,7 +64,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <i class="icon-directions"></i> <spring:message code="result" />
+                  <i class="icon-pencil"></i> <spring:message code="result" />
                   <div class="card-actions">
                     
                   </div>
@@ -79,7 +81,7 @@
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
-	                        	<input type="text" id="formName" name="formName" readonly value="secondEntry" class="form-control" placeholder="<spring:message code="idResult" />">
+	                        	<input type="text" id="formName" name="formName" readonly value="firstEntry" class="form-control" placeholder="<spring:message code="idResult" />">
 	                        </div>
 	                      </div>
 	                    </div>
@@ -96,23 +98,21 @@
 	                    
 	                    <div class="form-group row">
 	                      <fmt:formatDate value="${resultado.resultDate}" var="dateresult" pattern="yyyy-MM-dd" />
-	                      <label class="col-md-2 col-form-label"><spring:message code="resultDate" />:</label>
+	                      <label class="col-md-2 col-form-label">* <spring:message code="resultDate" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-prepend input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 	                        	<input type="text" id="resultDate" name="resultDate" value="${dateresult}" class="form-control date-picker" data-date-format="yyyy-mm-dd" data-date-end-date="+0d" placeholder="<spring:message code="resultDate" />">
 	                        	<span class="input-group-addon">yyyy-MM-dd</span>
-	                        	<label id="resultDateLabel" class="col-md-3 bg-danger col-form-label"><strong><c:out value="${resultadoAnterior.resultDate}" /></strong></label>
 	                        </div>
 	                      </div>
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resultLab" />:</label>
+	                      <label class="col-md-2 col-form-label">* <spring:message code="resultLab" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="resultLab" id="resultLab" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
 			                    	<c:forEach items="${labs}" var="lab">
 										<c:choose> 
 											<c:when test="${lab.catKey eq resultado.resultLab}">
@@ -124,7 +124,6 @@
 										</c:choose> 
 									</c:forEach>
 			                    </select>
-			                    <label id="resultLabLabel" class="col-md-3 bg-danger col-form-label"><strong><c:out value="${resultadoAnterior.resultLab}" /></strong></label>
 	                        </div>
 	                      </div>
 	                    </div>
@@ -173,18 +172,28 @@
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resH1N1pdmCA09" />:</label>
+	                      <label class="col-md-2 col-form-label"><spring:message code="fluType" />:</label>
+	                      <div class="col-md-10">
+	                      	<div class="input-group">
+	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
+	                        	<input type="text" id="fluType" name="fluType" readonly value="${resultado.fluType}" class="form-control" placeholder="<spring:message code="fluType" />">
+	                        </div>
+	                      </div>
+	                    </div>
+					
+						<div class="form-group row">
+	                      <label class="col-md-2 col-form-label"> * <spring:message code="antigen" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
-		                        <select name="resH1N1pdmCA09" id="resH1N1pdmCA09" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
+		                        <select name="antigen" id="antigen" class="form-control select2-single">
+		                        	<option value=""><spring:message code="empty"/></option>
+			                    	<c:forEach items="${antigenos}" var="antig">
 										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resH1N1pdmCA09}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
+											<c:when test="${antig.catKey eq resultado.antigen}">
+												<option selected value="${antig.catKey}"><spring:message code="${antig.messageKey}" /></option>
 											</c:when>
 											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
+												<option value="${antig.catKey}"><spring:message code="${antig.messageKey}" /></option>
 											</c:otherwise>
 										</c:choose> 
 									</c:forEach>
@@ -194,18 +203,18 @@
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resH1N1pdmMI15" />:</label>
+	                      <label class="col-md-2 col-form-label"> * <spring:message code="res" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
-		                        <select name="resH1N1pdmMI15" id="resH1N1pdmMI15" class="form-control select2-single">
+		                        <select name="result" id="result" class="form-control select2-single">
 			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
+			                    	<c:forEach items="${titers}" var="result">
 										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resH1N1pdmMI15}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
+											<c:when test="${result.catKey eq resultado.result}">
+												<option selected value="${result.catKey}"><spring:message code="${result.messageKey}" /></option>
 											</c:when>
 											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
+												<option value="${result.catKey}"><spring:message code="${result.messageKey}" /></option>
 											</c:otherwise>
 										</c:choose> 
 									</c:forEach>
@@ -213,192 +222,13 @@
 	                        </div>
 	                      </div>
 	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resNicaH3N2" />:</label>
+						
+						<div class="form-group row">
+	                      <label class="col-md-2 col-form-label"><spring:message code="antigenAdditional" />:</label>
 	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resNicaH3N2" id="resNicaH3N2" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resNicaH3N2}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resH3N2TX12" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resH3N2TX12" id="resH3N2TX12" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resH3N2TX12}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resH3N2SW13" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resH3N2SW13" id="resH3N2SW13" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resH3N2SW13}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resH3N2HK14" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resH3N2HK14" id="resH3N2HK14" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resH3N2HK14}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resBPH13" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resBPH13" id="resBPH13" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resBPH13}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resBBR08" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resBBR08" id="resBBR08" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resBBR08}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resNicaB" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resNicaB" id="resNicaB" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resNicaB}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resNicaYamagata" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resNicaYamagata" id="resNicaYamagata" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resNicaYamagata}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
-	                        </div>
-	                      </div>
-	                    </div>
-	                    
-	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="resNicaVictoria" />:</label>
-	                      <div class="col-md-10">
-	                      	<div>
-		                        <select name="resNicaVictoria" id="resNicaVictoria" class="form-control select2-single">
-			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="titer">
-										<c:choose> 
-											<c:when test="${titer.catKey eq resultado.resNicaVictoria}">
-												<option selected value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:when>
-											<c:otherwise>
-												<option value="${titer.catKey}"><spring:message code="${titer.messageKey}" /></option>
-											</c:otherwise>
-										</c:choose> 
-									</c:forEach>
-			                    </select>
+	                      	<div class="input-group">
+	                      		<span class="input-group-addon"><i class="fa fa-sort-alpha-asc"></i></span>
+	                        	<input type="text" id="antigenAdditional" name="antigenAdditional" autocomplete="antigenAdditional" value="${resultado.antigenAdditional}" class="form-control" placeholder="<spring:message code="antigenAdditional" />">
 	                        </div>
 	                      </div>
 	                    </div>
@@ -434,8 +264,10 @@
 	                    
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary" id="guardar"><i class="fa fa-save"></i>&nbsp;<spring:message code="save" /></button>
-                          <a href="<spring:url value="/" htmlEscape="true "/>" class="btn btn-danger"><i class="fa fa-undo"></i>&nbsp;<spring:message code="cancel" /></a>
+                          <a href="<spring:url value="/results/searchResult/" htmlEscape="true "/>" class="btn btn-danger"><i class="fa fa-sign-out"></i>&nbsp;<spring:message code="logout" /></a>
                         </div>
+	                    
+	                    
                       </form>
                     </div>
                   </div>
@@ -445,10 +277,15 @@
             <!-- /.col -->
           </div>
           <!-- /.row -->
+          
+          
         </div>
 
       </div>
       <!-- /.conainer-fluid -->
+      
+      
+	  
     </main>
     
   </div>
@@ -488,20 +325,26 @@
   <script src="${Select2}" type="text/javascript"></script>
 
   <!-- Custom scripts required by this view -->
-  <spring:url value="/resources/js/views/Resultados2.js" var="processResultado" />
+  <spring:url value="/resources/js/views/EditResultado.js" var="processResultado" />
   <script src="${processResultado}"></script>
+  
+  <script src="${jQValidationLoc}"></script>
+  
   
 <c:set var="successmessage"><spring:message code="process.success" /></c:set>
 <c:set var="errormessage"><spring:message code="process.errors" /></c:set>
 <c:set var="waitmessage"><spring:message code="process.wait" /></c:set>
-<c:set var="dataEntry2FinishedAlert"><spring:message code="dataEntry2FinishedAlert" /></c:set>
+<c:set var="dataEntry1FinishedAlert"><spring:message code="dataEntry1FinishedAlert" /></c:set>
+<c:set var="blank"><spring:message code="empty" /></c:set>
+
 
 <script>
 	jQuery(document).ready(function() {
 		var parametros = {saveResultUrl: "${saveResultUrl}", successmessage: "${successmessage}",
-				errormessage: "${errormessage}",waitmessage: "${waitmessage}", lenguaje: "${lenguaje}", dataEntry2FinishedAlert: "${dataEntry2FinishedAlert}"
+				errormessage: "${errormessage}",waitmessage: "${waitmessage}", lenguaje: "${lenguaje}", dataEntry1FinishedAlert: "${dataEntry1FinishedAlert}"
+					,blank: "${blank}"
 		};
-		ProcessResultado2.init(parametros);
+		ProcessResultado.init(parametros);
 	});
 </script>
   

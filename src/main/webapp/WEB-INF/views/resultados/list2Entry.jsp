@@ -79,10 +79,7 @@
 			                    <th><spring:message code="resultDate" /></th>
 			                    <th><spring:message code="resultLab" /></th>
 			                    <th><spring:message code="status" /></th>
-			                    <th><spring:message code="sampleType" /></th>
 			                    <th><spring:message code="usrResult" /></th>
-			                    <th><spring:message code="obs" /></th>
-			                    <th><spring:message code="sampleDate" /></th>
 			                    <th><spring:message code="pasivo" /></th>
 			                    <th><spring:message code="createdBy" /></th>
 			                    <th><spring:message code="dateCreated" /></th>
@@ -98,11 +95,8 @@
 		                            <td><c:out value="${resultado.sampleId}" /></td>
 		                            <td><c:out value="${resultado.resultDate}" /></td>
 		                            <td><c:out value="${resultado.resultLab}" /></td>
-		                            <td><c:out value="${resultado.estado}" /></td>
-		                            <td><c:out value="${resultado.sampleType}" /></td>
+		                            <td><c:out value="${resultado.estado}" /></td>		                            
 		                            <td><c:out value="${resultado.usrResult}" /></td>
-		                            <td><c:out value="${resultado.obs}" /></td>
-		                            <td><c:out value="${resultado.sampleDate}" /></td>
 		                            <td><c:out value="${resultado.pasive}" /></td>
 		                            <td><c:out value="${resultado.recordUser}" /></td>
 									<td><c:out value="${resultado.recordDate}" /></td>

@@ -202,35 +202,7 @@
 	    </div>
 	  <!-- /.modal-dialog -->
   	  </div>
-  	  <!-- Modal -->
-  	  <div class="modal fade" id="respuestasForm" data-role="respuestasForm" data-backdrop="static" data-aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title"><spring:message code="add" /> <spring:message code="userroles" /></h2>
-				</div>
-				<div class="modal-body">
-					<input type="hidden" id="inputAddRolUrl"/>
-					<div id="cuerpo">
-						<fieldset class="form-group">
-		                 	<i class="fa fa-check"></i>
-		                    <label><spring:message code="userroles" /></label>
-		                    <select id="roles" name="roles" class="form-control select2-single">
-		                      <c:forEach items="${roles}" var="rol">
-		                      	<option value="${rol.nombreRol}"><spring:message code="${rol.nombreRol}" /></option>
-		                      </c:forEach>
-		                    </select>
-		                 </fieldset>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="cancel" /></button>
-					<button type="button" id="buttonAgregarRol" class="btn btn-info" onclick="ejecutarAgregarRol()"><spring:message code="ok" /></button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-	    </div>
-	  <!-- /.modal-dialog -->
+  	  
   	  </div>
     </main>
     

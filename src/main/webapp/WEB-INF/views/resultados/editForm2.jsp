@@ -13,16 +13,6 @@
 <spring:url value="/resources/vendors/css/datepicker.css" var="datepickercss" />
 <link href="${datepickercss}" rel="stylesheet" type="text/css"/>
 
-<spring:url value="/resources/vendors/css/dataTables.bootstrap4.min.css" var="dataTablesCSS" />
-<link href="${dataTablesCSS}" rel="stylesheet" type="text/css"/>
-<spring:url value="/resources/vendors/css/responsive.dataTables.min.css" var="dataTablesResponsiveCSS" />
-<link href="${dataTablesResponsiveCSS}" rel="stylesheet" type="text/css"/>
-
-<spring:url value="/resources/vendors/css/select.dataTables.min.css" var="dataTablesSelectCSS" />
-<link href="${dataTablesSelectCSS}" rel="stylesheet" type="text/css"/>
-
-<spring:url value="/resources/vendors/css/buttons.dataTables.min.css" var="dataTablesButtonCSS" />
-<link href="${dataTablesButtonCSS}" rel="stylesheet" type="text/css"/>
 
 </head>
 <!-- BODY options, add following classes to body to change options
@@ -64,7 +54,7 @@
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<spring:url value="/" htmlEscape="true "/>"><spring:message code="home" /></a></li>
-        <li class="breadcrumb-item active"><spring:message code="newResult" /></li>
+        <li class="breadcrumb-item active"><spring:message code="edit" /></li>
       </ol>
 	  <!-- Container -->
       <div class="container-fluid">
@@ -107,7 +97,7 @@
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <fmt:formatDate value="${resultado.resultDate}" var="dateresult" pattern="yyyy-MM-dd" />
+	                      <fmt:formatDate value="${resultadoAnterior.resultDate}" var="dateresult" pattern="yyyy-MM-dd" />
 	                      <label class="col-md-2 col-form-label">* <spring:message code="resultDate" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-prepend input-group">
@@ -123,9 +113,10 @@
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="resultLab" id="resultLab" class="form-control select2-single">
+		                        	<option value=""><spring:message code="empty"/></option>
 			                    	<c:forEach items="${labs}" var="lab">
 										<c:choose> 
-											<c:when test="${lab.catKey eq resultado.resultLab}">
+											<c:when test="${lab.catKey eq resultadoAnterior.resultLab}">
 												<option selected value="${lab.catKey}"><spring:message code="${lab.messageKey}" /></option>
 											</c:when>
 											<c:otherwise>
@@ -143,7 +134,7 @@
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
-	                        	<input type="text" id="sampleId" name="sampleId" autocomplete="sampleId" value="${resultado.sampleId}" class="form-control" placeholder="<spring:message code="sampleId" />">
+	                        	<input type="text" id="sampleId" name="sampleId" autocomplete="sampleId" value="${resultadoAnterior.sampleId}" class="form-control" placeholder="<spring:message code="sampleId" />">
 	                        </div>
 	                      </div>
 	                    </div>
@@ -181,76 +172,12 @@
 	                      </div>
 	                    </div>
 	                    
-	                    
-                        <div class="form-group">
-                          <a href="#" class="btn btn-primary openmodal" data-flu="H1N1" data-cat="CAT_H1N1" data-nomitem="<spring:message code="CAT_FLU_1" />" data-toggle="modal"><i class="fa fa-plus"></i> <spring:message code="CAT_FLU_1" /></a>
-                          <a href="#" class="btn btn-primary openmodal" data-flu="H3N2" data-cat="CAT_H3N2" data-nomitem="<spring:message code="CAT_FLU_2" />" data-toggle="modal"><i class="fa fa-plus"></i> <spring:message code="CAT_FLU_2" /></a>
-                          <a href="#" class="btn btn-primary openmodal" data-flu="B" data-cat="CAT_INFB" data-nomitem="<spring:message code="CAT_FLU_3" />" data-toggle="modal"><i class="fa fa-plus"></i> <spring:message code="CAT_FLU_3" /></a>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-          
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header">
-                  <i class="icon-pencil"></i> <spring:message code="result" />
-                  <div class="card-actions">
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                  	<table id="resultados" class="table table-striped table-bordered datatable" width="100%">
-		                <thead>
-		                	<tr>
-		                		<th><spring:message code="fluType" /></th>
-		                		<th><spring:message code="antigen" /></th>
-			                    <th><spring:message code="res" /></th>
-			                    <th><spring:message code="file" /></th>
-			                    <th><spring:message code="obs" /></th>
-								<th><spring:message code="status" /></th></th>
-								<th><spring:message code="pasive" /></th></th>
-		                	</tr>
-		                </thead>
-		                <tbody>
-		                </tbody>
-		              </table>
-                  </div>
-                </div>
-              </div>
-			</div>
-			</div>
-			<!-- /.row -->
-			
-        </div>
-
-      </div>
-      <!-- /.conainer-fluid -->
-      
-      <!-- Modal -->
-  	  <div class="modal fade" id="modalResult" data-role="modalResult" data-backdrop="static" data-aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div id="titulo"><h3><spring:message code="confirm" /></h3></div>
-				</div>
-				<div class="modal-body">
-					<div id="cuerpo"></div>
-					<form  id="addResultFormModal">   
-					
-						<div class="form-group row" hidden>
+	                    <div class="form-group row">
 	                      <label class="col-md-2 col-form-label"><spring:message code="fluType" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
-	                        	<input type="text" id="fluType" name="fluType" readonly value="${resultado.fluType}" class="form-control" placeholder="<spring:message code="fluType" />">
+	                        	<input type="text" id="fluType" name="fluType" readonly value="${resultadoAnterior.fluType}" class="form-control" placeholder="<spring:message code="fluType" />">
 	                        </div>
 	                      </div>
 	                    </div>
@@ -260,6 +187,17 @@
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="antigen" id="antigen" class="form-control select2-single">
+		                        	<option value=""><spring:message code="empty"/></option>
+			                    	<c:forEach items="${antigenos}" var="antig">
+										<c:choose> 
+											<c:when test="${antig.catKey eq resultado.antigen}">
+												<option selected value="${antig.catKey}"><spring:message code="${antig.messageKey}" /></option>
+											</c:when>
+											<c:otherwise>
+												<option value="${antig.catKey}"><spring:message code="${antig.messageKey}" /></option>
+											</c:otherwise>
+										</c:choose> 
+									</c:forEach>
 			                    </select>
 	                        </div>
 	                      </div>
@@ -271,13 +209,13 @@
 	                      	<div>
 		                        <select name="result" id="result" class="form-control select2-single">
 			                    	<option value=""><spring:message code="empty"/></option>
-			                    	<c:forEach items="${titers}" var="ant">
+			                    	<c:forEach items="${titers}" var="result">
 										<c:choose> 
-											<c:when test="${ant.catKey eq resultado.antigen}">
-												<option selected value="${ant.catKey}"><spring:message code="${ant.messageKey}" /></option>
+											<c:when test="${result.catKey eq resultado.result}">
+												<option selected value="${result.catKey}"><spring:message code="${result.messageKey}" /></option>
 											</c:when>
 											<c:otherwise>
-												<option value="${ant.catKey}"><spring:message code="${ant.messageKey}" /></option>
+												<option value="${result.catKey}"><spring:message code="${result.messageKey}" /></option>
 											</c:otherwise>
 										</c:choose> 
 									</c:forEach>
@@ -325,17 +263,29 @@
 	                      </div>
 	                    </div>
 	                    
-                        <div class="modal-footer">
+                        <div class="form-group">
                           <button type="submit" class="btn btn-primary" id="guardar"><i class="fa fa-save"></i>&nbsp;<spring:message code="save" /></button>
-                          <button type="button" class="btn btn-secondary" id="salir" data-dismiss="modal"><i class="fa fa-sign-out"></i>&nbsp;<spring:message code="logout" /></button>
+                          <a href="<spring:url value="/results/secondEntry/checkResult/" htmlEscape="true "/>" class="btn btn-danger"><i class="fa fa-sign-out"></i>&nbsp;<spring:message code="logout" /></a>
                         </div>
-                     </form>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-	    </div>
-	  <!-- /.modal-dialog -->
-	  </div>
+	                    
+	                    
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+          
+          
+        </div>
+
+      </div>
+      <!-- /.conainer-fluid -->
+      
+      
 	  
     </main>
     
@@ -376,40 +326,24 @@
   <script src="${Select2}" type="text/javascript"></script>
 
   <!-- Custom scripts required by this view -->
-  <spring:url value="/resources/js/views/Resultados.js" var="processResultado" />
+  <spring:url value="/resources/js/views/EditResultado2.js" var="processResultado" />
   <script src="${processResultado}"></script>
   
   <script src="${jQValidationLoc}"></script>
-  <spring:url value="/resources/vendors/js/i18n/datatables/label_{language}.json" var="dataTablesLang">
-  	<spring:param name="language" value="${lenguaje}" />
-  </spring:url>
-  <spring:url value="/resources/vendors/js/jquery.dataTables.min.js" var="dataTablesSc" />
-  <script src="${dataTablesSc}" type="text/javascript"></script>
-  <spring:url value="/resources/vendors/js/dataTables.bootstrap4.min.js" var="dataTablesBsSc" />
-  <script src="${dataTablesBsSc}" type="text/javascript"></script>
-  <spring:url value="/resources/vendors/js/dataTables.responsive.min.js" var="dataTablesResponsive" />
-  <script src="${dataTablesResponsive}" type="text/javascript"></script>
-  <spring:url value="/resources/vendors/js/dataTables.select.min.js" var="dataTablesSelect" />
-  <script src="${dataTablesSelect}" type="text/javascript"></script>
-  <spring:url value="/resources/vendors/js/dataTables.buttons.min.js" var="dataTablesButtons" />
-  <script src="${dataTablesButtons}" type="text/javascript"></script>
   
   
 <c:set var="successmessage"><spring:message code="process.success" /></c:set>
 <c:set var="errormessage"><spring:message code="process.errors" /></c:set>
 <c:set var="waitmessage"><spring:message code="process.wait" /></c:set>
-<c:set var="dataEntry1FinishedAlert"><spring:message code="dataEntry1FinishedAlert" /></c:set>
+<c:set var="dataEntry2FinishedAlert"><spring:message code="dataEntry2FinishedAlert" /></c:set>
 <c:set var="blank"><spring:message code="empty" /></c:set>
-<c:set var="noResults"><spring:message code="noResults" /></c:set>
 
-<spring:url value="/results/getAntigen/" var="antisUrl"/>
-<spring:url value="/results/searchResultCode/" var="searchUrl"/>
 
 <script>
 	jQuery(document).ready(function() {
-		var parametros = {antisUrl: "${antisUrl}", saveResultUrl: "${saveResultUrl}", successmessage: "${successmessage}",
-				errormessage: "${errormessage}",waitmessage: "${waitmessage}", lenguaje: "${lenguaje}", dataEntry1FinishedAlert: "${dataEntry1FinishedAlert}"
-					,dataTablesLang: "${dataTablesLang}",blank: "${blank}",searchUrl: "${searchUrl}",noResults: "${noResults}"
+		var parametros = {saveResultUrl: "${saveResultUrl}", successmessage: "${successmessage}",
+				errormessage: "${errormessage}",waitmessage: "${waitmessage}", lenguaje: "${lenguaje}", dataEntry2FinishedAlert: "${dataEntry2FinishedAlert}"
+					,blank: "${blank}"
 		};
 		ProcessResultado.init(parametros);
 	});

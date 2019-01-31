@@ -2,6 +2,7 @@ package edu.umich.hai.web.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -62,23 +63,52 @@ public class ResultadosController {
 	@RequestMapping(value = "/searchResult/", method = RequestMethod.GET)
     public String obtenerResultados(Model model) throws ParseException { 	
     	logger.debug("Mostrando Pagina de busqueda de resultados en JSP");
+    	List<MessageResource> allantigens = new ArrayList<MessageResource>();
     	List<MessageResource> estados = messageResourceService.getCatalogo("CAT_STA");
     	model.addAttribute("estados", estados);
     	List<MessageResource> labs = messageResourceService.getCatalogo("CAT_LAB");
     	model.addAttribute("labs", labs);
     	List<MessageResource> sampletypes = messageResourceService.getCatalogo("CAT_SMP");
     	model.addAttribute("sampletypes", sampletypes);
+    	List<MessageResource> fluTypes = messageResourceService.getCatalogo("CAT_FLU");
+    	model.addAttribute("fluTypes", fluTypes);
+    	List<MessageResource> antigens = messageResourceService.getCatalogo("CAT_H1N1");
+    	allantigens.addAll(antigens);
+    	antigens = messageResourceService.getCatalogo("CAT_H3N2");
+    	allantigens.addAll(antigens);
+    	antigens = messageResourceService.getCatalogo("CAT_INFB");
+    	allantigens.addAll(antigens);
+    	model.addAttribute("allantigens", allantigens);
+    	List<MessageResource> results = messageResourceService.getCatalogo("CAT_TIT");
+    	model.addAttribute("results", results);
     	List<UserSistema> usuarios = this.usuarioService.getActiveUsers();
     	model.addAttribute("usuarios", usuarios);
     	return "resultados/search";
 	}
 	
+	
+	@RequestMapping(value = "/getAntigen/", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<MessageResource> fetchAntigens(@RequestParam(value = "fluType", required = true) String fluType
+    		)  {
+        logger.info("Obteniendo antigenos " + fluType);
+        List<MessageResource> datos = messageResourceService.getCatalogo(fluType);
+        for (MessageResource anti:datos) {
+        	String descCatalogo;
+    		descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? anti.getEnglish(): anti.getSpanish();
+    		anti.setMessageKey(descCatalogo);
+    	}
+        return datos;
+    }
+	
 	@RequestMapping(value = "/searchResult/", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody List<Resultado> fetchSolicitudes(@RequestParam(value = "sampleId", required = false) String sampleId,
+    public @ResponseBody List<Resultado> fetchResultados(@RequestParam(value = "sampleId", required = false) String sampleId,
     		@RequestParam(value = "fecResultadoRange", required = false, defaultValue = "") String fecResultadoRange,
     		@RequestParam(value = "resultLab", required = true) String resultLab,
     		@RequestParam(value = "estado", required = true) String estado,
     		@RequestParam(value = "sampleType", required = true) String sampleType,
+    		@RequestParam(value = "fluType", required = true) String fluType,
+    		@RequestParam(value = "antigen", required = true) String antigen,
+    		@RequestParam(value = "result", required = true) String result,
     		@RequestParam(value = "usrResult", required = true) String usrResult
     		) throws ParseException {
         logger.info("Obteniendo resultados");
@@ -89,7 +119,7 @@ public class ResultadosController {
         	desde = formatter.parse(fecResultadoRange.substring(0, 10)).getTime();
         	hasta = formatter.parse(fecResultadoRange.substring(fecResultadoRange.length()-10, fecResultadoRange.length())).getTime();
         }
-        List<Resultado> datos = resultadoService.getResultadosFiltro(sampleId, desde, hasta, resultLab, sampleType, estado, usrResult);
+        List<Resultado> datos = resultadoService.getResultadosFiltro(sampleId, desde, hasta, resultLab, sampleType, estado, usrResult,fluType,antigen,result);
         if (datos == null){
         	logger.debug("Nulo");
         }
@@ -98,12 +128,36 @@ public class ResultadosController {
         		MessageResource mr = null;
         		String descCatalogo = null;
         		mr = this.messageResourceService.getMensaje(resultado.getResultLab(),"CAT_LAB");
-        		descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
-        		resultado.setResultLab(descCatalogo);
+        		if(mr!=null) {
+        			descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
+        			resultado.setResultLab(descCatalogo);
+        		}
         		mr = this.messageResourceService.getMensaje(resultado.getSampleType(),"CAT_SMP");
-        		descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
-        		resultado.setSampleType(descCatalogo);
+        		if(mr!=null) {
+        			descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
+        			resultado.setSampleType(descCatalogo);
+        		}
         	}
+        }
+        return datos;
+    }
+	
+	@RequestMapping(value = "/searchResultCode/", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Resultado> fetchResultadosCode(@RequestParam(value = "sampleId", required = true) String sampleId,
+    		@RequestParam(value = "resultDate", required = true) String resultDate,
+    		@RequestParam(value = "resultLab", required = true) String resultLab
+    		) throws ParseException {
+        logger.info("Obteniendo resultados");
+        Long desde = null;
+        Long hasta = null;
+        if (!resultDate.matches("")) {
+        	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        	desde = formatter.parse(resultDate.substring(0, 10)).getTime();
+        	hasta = formatter.parse(resultDate.substring(0, 10)).getTime();
+        }
+        List<Resultado> datos = resultadoService.getResultadosFiltro(sampleId, desde, hasta, resultLab, "ALL", "ALL", "ALL","ALL","ALL","ALL");
+        if (datos == null){
+        	logger.debug("Nulo");
         }
         return datos;
     }
@@ -134,7 +188,17 @@ public class ResultadosController {
 	    	model.addAttribute("titers", titers);
 	    	List<MessageResource> labs = messageResourceService.getCatalogo("CAT_LAB");
 	    	model.addAttribute("labs", labs);
-			return "resultados/enterForm";
+	    	List<MessageResource> antigenos = null;
+	    	String tipoFlu = resultado.getFluType();
+	    	if(tipoFlu.equals("H1N1")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_H1N1");
+	    	} else if(tipoFlu.equals("H3N2")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_H3N2");
+	    	} else if(tipoFlu.equals("B")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_INFB");
+	    	}
+	    	model.addAttribute("antigenos", antigenos);
+			return "resultados/editForm";
 		}
 		else{
 			return "403";
@@ -153,11 +217,15 @@ public class ResultadosController {
     		MessageResource mr = null;
     		String descCatalogo = null;
     		mr = this.messageResourceService.getMensaje(resultado.getResultLab(),"CAT_LAB");
-    		descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
-    		resultado.setResultLab(descCatalogo);
+    		if(mr!=null) {
+    			descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
+    			resultado.setResultLab(descCatalogo);
+    		}
     		mr = this.messageResourceService.getMensaje(resultado.getSampleType(),"CAT_SMP");
-    		descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
-    		resultado.setSampleType(descCatalogo);
+    		if(mr!=null) {
+    			descCatalogo = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
+    			resultado.setSampleType(descCatalogo);
+    		}
     	}
     	return "resultados/list2Entry";
 	}
@@ -181,8 +249,18 @@ public class ResultadosController {
 	    	model.addAttribute("titers", titers);
 	    	List<MessageResource> labs = messageResourceService.getCatalogo("CAT_LAB");
 	    	model.addAttribute("labs", labs);
+	    	List<MessageResource> antigenos = null;
+	    	String tipoFlu = resultadoAnterior.getFluType();
+	    	if(tipoFlu.equals("H1N1")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_H1N1");
+	    	} else if(tipoFlu.equals("H3N2")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_H3N2");
+	    	} else if(tipoFlu.equals("B")) {
+	    		antigenos = messageResourceService.getCatalogo("CAT_INFB");
+	    	}
+	    	model.addAttribute("antigenos", antigenos);
 	    	model.addAttribute("resultado", resultado);
-			return "resultados/enter2Form";
+			return "resultados/editForm2";
 		}
 		else{
 			return "403";
@@ -195,21 +273,14 @@ public class ResultadosController {
 	public ResponseEntity<String> processResultForm( @RequestParam(value="idResult", required=false, defaultValue="" ) String idResult
 			, @RequestParam(value="formName", required=true) String formName
 	        , @RequestParam(value="sampleId", required=true) String sampleId
-	        , @RequestParam( value="sampleType", required=true ) String sampleType
+	        , @RequestParam( value="sampleType", required=false ) String sampleType
 	        , @RequestParam( value="sampleDate", required=false, defaultValue="" ) String sampleDate
 	        , @RequestParam( value="resultDate", required=true ) String resultDate
-	        , @RequestParam( value="resH1N1pdmCA09", required=false, defaultValue="") String resH1N1pdmCA09
-	        , @RequestParam( value="resH1N1pdmMI15", required=false, defaultValue="") String resH1N1pdmMI15
-	        , @RequestParam( value="resNicaH3N2", required=false, defaultValue="") String resNicaH3N2
-	        , @RequestParam( value="resH3N2TX12", required=false, defaultValue="") String resH3N2TX12
-	        , @RequestParam( value="resH3N2SW13", required=false, defaultValue="") String resH3N2SW13
-	        , @RequestParam( value="resH3N2HK14", required=false, defaultValue="") String resH3N2HK14
-	        , @RequestParam( value="resBPH13", required=false, defaultValue="") String resBPH13
-	        , @RequestParam( value="resBBR08", required=false, defaultValue="") String resBBR08
-	        , @RequestParam( value="resNicaB", required=false, defaultValue="") String resNicaB
-	        , @RequestParam( value="resNicaYamagata", required=false, defaultValue="") String resNicaYamagata
-	        , @RequestParam( value="resNicaVictoria", required=false, defaultValue="") String resNicaVictoria
 	        , @RequestParam( value="resultLab", required=true) String resultLab
+	        , @RequestParam( value="fluType", required=true) String fluType
+	        , @RequestParam( value="antigen", required=true) String antigen
+	        , @RequestParam( value="result", required=true) String result
+	        , @RequestParam( value="antigenAdditional", required=false) String antigenAdditional
 	        , @RequestParam( value="obs", required=false) String obs
 	        , @RequestParam( value="file", required=false) String file
 	        , @RequestParam( value="finalize", required=false) boolean finalize
@@ -243,19 +314,12 @@ public class ResultadosController {
 			resultado.setSampleType(sampleType);
 			resultado.setSampleDate(dateSample);
 			resultado.setResultDate(dateResult);
-			resultado.setResBBR08(resBBR08);
-			resultado.setResBPH13(resBPH13);
-			resultado.setResH1N1pdmCA09(resH1N1pdmCA09);
-			resultado.setResH1N1pdmMI15(resH1N1pdmMI15);
-			resultado.setResH3N2HK14(resH3N2HK14);
-			resultado.setResH3N2SW13(resH3N2SW13);
-			resultado.setResH3N2TX12(resH3N2TX12);
-			resultado.setResNicaB(resNicaB);
-			resultado.setResNicaH3N2(resNicaH3N2);
-			resultado.setResNicaVictoria(resNicaVictoria);
-			resultado.setResNicaYamagata(resNicaYamagata);
 			resultado.setResultLab(resultLab);
+			resultado.setFluType(fluType);
+			resultado.setAntigen(antigen);
+			resultado.setResult(result);
 			resultado.setUsrResult(usuarioActual);
+			resultado.setAntigenAdditional(antigenAdditional);
 			resultado.setObs(obs);
 			resultado.setFile(file);
 			if(formName.matches("firstEntry") && finalize) {

@@ -4,7 +4,7 @@ return {
   //main function to initiate the module
   init: function (parametros) {	
 	  
-	$('#estado, #resultLab,#sampleType, #usrResult').select2({
+	$('#estado, #resultLab,#sampleType,#fluType,#antigen, #usrResult').select2({
 		theme: "bootstrap"
 	});
 	
@@ -159,11 +159,11 @@ return {
 				var btnedit1entry = null;
 				var btnadd2entry = null;
 				var btnedit2entry = null;
-				data[row].estado=='0'?btnedit1entry = '<a title="edit" href=' + firstEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-pencil"></i></a>':btnedit1entry = '';
-				data[row].estado=='1'?btnadd2entry = '<a title="new" href=' + secondEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-directions"></i></a>':btnadd2entry = '';
-				data[row].estado=='2'?btnedit2entry = '<a title="edit" href=' + secondEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-directions"></i></a>':btnedit2entry = '';
+				data[row].estado=='0'?btnedit1entry = '<a title="" href=' + firstEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-pencil"></i></a>':btnedit1entry = '';
+				data[row].estado=='1'?btnadd2entry = '<a title="" href=' + secondEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-directions"></i></a>':btnadd2entry = '';
+				data[row].estado=='2'?btnedit2entry = '<a title="" href=' + secondEntryUrl + ' class="btn btn-xs btn-primary" ><i class="icon-directions"></i></a>':btnedit2entry = '';
 				
-				table1.row.add([data[row].sampleId,d1,data[row].resultLab,data[row].estado,data[row].sampleType,data[row].usrResult.completeName,data[row].obs,
+				table1.row.add([data[row].sampleId,d1,data[row].resultLab,data[row].fluType,data[row].antigen,data[row].result,data[row].estado,data[row].sampleType,data[row].usrResult.completeName,
 					d2,data[row].pasive,data[row].recordUser,d3,btnedit1entry + ' ' +btnadd2entry+ ' ' +btnedit2entry]);
 			}
 			$('#resultadosdiv').show();

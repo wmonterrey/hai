@@ -13,7 +13,7 @@ var ProcessResultado = function () {
 return {
   //main function to initiate the module
   init: function (parametros) {	
-	  $('#sampleId').focus();
+	  $('#resultDate').focus();
   
   handleDatePickers(parametros.lenguaje);	 
   $('#sampleType, #resultLab, #antigen, #result').select2({
@@ -24,7 +24,7 @@ return {
 
   $.validator.setDefaults( {
     submitHandler: function () {
-      processSolicitud();
+    	processResultado();
     }
   } );
 
@@ -89,7 +89,7 @@ return {
       
   });
   
-  function processSolicitud(){
+  function processResultado(){
 	  $.blockUI({ message: parametros.waitmessage });
 	    $.post( parametros.saveResultUrl
 	            , $( 'form' ).serialize()
@@ -110,21 +110,6 @@ return {
     					    closeButton: true,
     					    progressBar: true,
     					  });
-						var table1 = $('#resultados').DataTable({
-						      "oLanguage": {
-						          "sUrl": parametros.dataTablesLang
-						      },
-						      "bFilter": true, 
-						      "bInfo": true, 
-						      "bPaginate": true, 
-						      "bDestroy": true,
-						      "responsive": true
-						  });
-						  //table1.clear().draw();
-						table1.row.add([resultado.fluType,resultado.antigen,resultado.result,resultado.file,resultado.obs,resultado.estado,resultado.pasive]);
-						$('#antigen').val('').trigger('change');
-						$('#result').val('').trigger('change');
-						$('#antigen').focus();
 						$.unblockUI();
 					}
 	            }
@@ -178,102 +163,9 @@ return {
   
   $('#finalize').change(function() {
       if(this.checked) {
-      	alert(parametros.dataEntry1FinishedAlert);
+      	alert(parametros.dataEntry2FinishedAlert);
       }      
   });
-  
-  $(".openmodal").click(function(){ 
-	if ($('#add-resultado-form').valid()){
-		$('#fluType').val($(this).data('flu'));
-		$.getJSON(parametros.antisUrl, {
-			fluType : $(this).data('cat'),
-            ajax : 'true'
-        }, function(data) {
-            var html='<option value="">'+ parametros.blank +'</option>';
-            var len = data.length;
-            for ( var i = 0; i < len; i++) {
-                html += '<option value="' + data[i].catKey + '">'
-                    + data[i].messageKey + '</option>';
-            }
-            $('#antigen').html(html);
-            $('#antigen').focus();
-            $('#antigen').select2({
-        	    theme: "bootstrap",
-        	    width: '100%'
-            });
-        });
-		
-		$('#titulo').html('<h2 class="modal-title">'+ $(this).data('nomitem') +'</h2>');
-		$('#modalResult').modal('show');
-	}
-	else{
-		if($('#sampleId').val()=='') $('#sampleId').focus();
-		if($('#resultDate').val()=='') $('#resultDate').focus();
-	}
-  });
-  
-  
-  $('#sampleId').change(function() {
-	  if($('#sampleId').val()!='' && $('#resultDate').val()!='' && $('#resultLab').val()!=''){
-		  searchData();
-	  }  
-  });
-  
-  $('#resultLab').change(function() {
-	  if($('#sampleId').val()!='' && $('#resultDate').val()!='' && $('#resultLab').val()!=''){
-		  searchData();
-	  }         
-  });
-  
-  $('#resultDate').change(function() {
-	  if($('#sampleId').val()!='' && $('#resultDate').val()!='' && $('#resultLab').val()!=''){
-		  searchData();
-	  }           
-  });
-  
-  
-  $("#salir").click(function(){ 
-	  $('#result').val('').trigger('change');
-	  });
-  
-  
-  function searchData(){
-	  $.blockUI({ message: parametros.waitmessage });
-	  $.getJSON(parametros.searchUrl,{
-		  sampleId : $("#sampleId").val(),
-		  resultDate : $("#resultDate").val(),
-		  resultLab : $("#resultLab").val(),
-            ajax : 'true'
-        }, function(data) {
-		  var table1 = $('#resultados').DataTable({
-	          "oLanguage": {
-	              "sUrl": parametros.dataTablesLang
-	          },
-	          "bFilter": true, 
-	          "bInfo": true, 
-	          "bPaginate": true, 
-	          "bDestroy": true,
-	          "responsive": true
-	      });
-		  table1.clear().draw();
-		if (data == ''){
-			toastr.info(data, parametros.noResults, {
-				closeButton: true,
-				progressBar: true,
-			 });
-		}
-		else{
-			for (var row in data) {
-				table1.row.add([data[row].fluType,data[row].antigen,data[row].result,data[row].file,data[row].obs,data[row].estado,data[row].pasive]);
-			}
-		}
-	})
-	.fail(function() {
-	    alert( "error" );
-	    $.unblockUI();
-	});
-	$.unblockUI();
-  }
 
   }
  };

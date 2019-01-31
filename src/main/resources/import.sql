@@ -62,17 +62,11 @@ INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'sampleI
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'sampleType', 'Tipo muestra','0','0',0);
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'sampleDate', 'Fecha muestra','0','0',0);
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resultDate', 'Fecha resultado','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resH1N1pdmCA09', 'H1N1pdm CA09','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resH1N1pdmMI15', 'H1N1pdm MI15','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resNicaH3N2', 'Nica H3N2','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resH3N2TX12', 'H3N2 TX12','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resH3N2SW13', 'H3N2 SW13','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resH3N2HK14', 'H3N2 HK14','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resBPH13', 'B PH13','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resBBR08', 'B BR08','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resNicaB', 'Nica B','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resNicaYamagata', 'Nica Yamagata','0','0',0);
-INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resNicaVictoria', 'Nica Victoria','0','0',0);
+INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'fluType', 'Influenza','0','0',0);
+INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'antigen', 'Antígeno','0','0',0);
+INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'res', 'Resultado','0','0',0);
+INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'antigenAdditional', 'Adic Antígeno','0','0',0);
+
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'file', 'Archivo','0','0',0);
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'resultLab', 'Laboratorio','0','0',0);
 INSERT INTO mensajes (messageKey, es, catPasive, isCat, orden) VALUES ( 'usrResult', 'Usuario','0','0',0);
@@ -227,6 +221,31 @@ INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, 
 INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_SMP', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de tipos de muestra');
 INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_SMP_1','SER','CAT_SMP',NULL,'0',1,'0','Suero');
 INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_SMP_2','PLA','CAT_SMP',NULL,'0',2,'0','Plasma');
+
+/*Tipos de influenza*/
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_FLU', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de tipos de influenza');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_FLU_1','H1N1','CAT_FLU',NULL,'0',1,'0','Inf A H1N1');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_FLU_2','H3N2','CAT_FLU',NULL,'0',2,'0','Inf A H3N2');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_FLU_3','B','CAT_FLU',NULL,'0',3,'0','Inf B');
+
+
+/*Antigenos H1N1*/
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H1N1', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de antigenos de H1N1');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H1N1_1','H1N1pdm_CA09','CAT_H1N1',NULL,'0',1,'0','H1N1pdm_CA09');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H1N1_2','H1N1pdm_MI15','CAT_H1N1',NULL,'0',2,'0','H1N1pdm_MI15');
+
+/*Antigenos H1N1*/
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H3N2', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de antigenos de H3N2');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H3N2_1','H3N2_TX12','CAT_H3N2',NULL,'0',1,'0','H3N2_TX12');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H3N2_2','H3N2_SW13','CAT_H3N2',NULL,'0',2,'0','H3N2_SW13');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H3N2_3','H3N2_HK14','CAT_H3N2',NULL,'0',3,'0','H3N2_HK14');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_H3N2_4','Nica_H3N2','CAT_H3N2',NULL,'0',4,'0','Nica_H3N2');
+
+/*Antigenos B*/
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_INFB', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de antigenos de Influenza B');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_INFB_1','B_PH13','CAT_INFB',NULL,'0',1,'0','B_PH13');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_INFB_2','B_BR08','CAT_INFB',NULL,'0',2,'0','B_BR08');
+INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_INFB_3','Nica_B','CAT_INFB',NULL,'0',3,'0','Nica_B');
 
 /*Titulos*/
 INSERT INTO mensajes (messageKey, catKey, catRoot, en, isCat, orden, catPasive, es) VALUES ('CAT_TIT', NULL, NULL, NULL, '1', 0, '0', 'Catalogo de titulos');

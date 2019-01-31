@@ -1,4 +1,4 @@
-var ProcessResultado2 = function () {
+var ProcessResultado = function () {
 	
 	var handleDatePickers = function (idioma) {
 	    if (jQuery().datepicker) {
@@ -13,23 +13,23 @@ var ProcessResultado2 = function () {
 return {
   //main function to initiate the module
   init: function (parametros) {	
-  $('#resultDateLabel').hide();
-  $('#resultLabLabel').hide();
-  $('#resultDate').focus();
-  $('#resultDate').select();
+	  $('#sampleId').focus();
+  
   handleDatePickers(parametros.lenguaje);	 
-  $('#sampleType, #resultLab, #resH1N1pdmCA09').select2({
+  $('#sampleType, #resultLab, #antigen, #result').select2({
 	    theme: "bootstrap",
 	    width: '100%'
 });
+  
 
   $.validator.setDefaults( {
     submitHandler: function () {
-      processSolicitud();
+    	processResultado();
     }
   } );
 
-  $( '#add-resultado-form' ).validate( {
+  $('form').each(function () {
+    $(this).validate({
     rules: {
     	idResult: {
             required: false,
@@ -40,7 +40,7 @@ return {
             maxlength: 50
         },
         sampleType:{
-        	required: true
+        	required: false
         },
         sampleDate: {
             required: false
@@ -48,12 +48,20 @@ return {
         resultDate: {
             required: true
         },
-        resH1N1pdmCA09:{
-        	required: false,
-            maxlength: 50
-        },
         resultLab:{
         	required: true
+        },
+        antigen:{
+        	required: true
+        },
+        result:{
+        	required: true
+        },
+        file:{
+        	maxlength: 50, required: false
+        },
+        antigenAdditional:{
+        	maxlength: 250, required: false
         },
         obs: {
         	maxlength: 500, required: false
@@ -78,11 +86,13 @@ return {
       $( element ).parents( '.form-group' ).addClass( 'has-success' ).removeClass( 'has-danger' );
     }
   });
+      
+  });
   
-  function processSolicitud(){
+  function processResultado(){
 	  $.blockUI({ message: parametros.waitmessage });
 	    $.post( parametros.saveResultUrl
-	            , $( '#add-resultado-form' ).serialize()
+	            , $( 'form' ).serialize()
 	            , function( data )
 	            {
 	    			resultado = JSON.parse(data);
@@ -99,25 +109,7 @@ return {
 						toastr.success(mensaje, parametros.successmessage, {
     					    closeButton: true,
     					    progressBar: true,
-    					  }); 
-						$('#sampleId').val('');
-						$('#sampleType').val('').trigger("change");
-						$('#sampleDate').val('');
-						$('#resH1N1pdmCA09').val('').trigger("change");
-						$('#resH1N1pdmMI15').val('').trigger("change");
-						$('#resNicaH3N2').val('').trigger("change");
-						$('#resH3N2TX12').val('').trigger("change");
-						$('#resH3N2SW13').val('').trigger("change");
-						$('#resH3N2HK14').val('').trigger("change");
-						$('#resBPH13').val('').trigger("change");
-						$('#resBBR08').val('').trigger("change");
-						$('#resNicaB').val('').trigger("change");
-						$('#resNicaYamagata').val('').trigger("change");
-						$('#resNicaVictoria').val('').trigger("change");
-						$('#obs').val('');
-						$('#file').val('');
-						$('#finalize').prop("checked", false);
-						$('#sampleId').focus();
+    					  });
 						$.unblockUI();
 					}
 	            }
@@ -136,14 +128,6 @@ return {
 	  			$('#resultLab').select2('open');
 		    }
 	  });
-  
-  $('#resultDate').change(function() {
-      $('#resultDateLabel').show();
-  });
-  
-  $('#resultLab').change(function() {
-      $('#resultLabLabel').show();
-  });
   
   $('#resultLab').on(
 		    'select2:close',
@@ -168,19 +152,6 @@ return {
 		    }
 		);
   
-
-  $('#sampleDate').on('keydown',function(event){
-	  	event.stopImmediatePropagation();
-		    if( event.which == 13 ){
-		        event.preventDefault();
-	  			$('#resH1N1pdmCA09').focus();
-	  			$('#resH1N1pdmCA09').select2('open');
-		    }
-	  });
- 
-  
-
-
   
   $('#obs').on('keydown',function(event){
   	event.stopImmediatePropagation();
@@ -192,7 +163,7 @@ return {
   
   $('#finalize').change(function() {
       if(this.checked) {
-      	alert(parametros.dataEntry2FinishedAlert);
+      	alert(parametros.dataEntry1FinishedAlert);
       }      
   });
 

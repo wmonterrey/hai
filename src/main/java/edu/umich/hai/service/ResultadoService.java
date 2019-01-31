@@ -45,7 +45,7 @@ public class ResultadoService {
 	
 	@SuppressWarnings("unchecked")
 	public List<Resultado> getResultadosFiltro(String sampleId, 
-			Long desde, Long hasta, String resultLab, String sampleType, String estado, String usrResultado) {
+			Long desde, Long hasta, String resultLab, String sampleType, String estado, String usrResultado, String fluType, String antigen, String result) {
 		//Set the SQL Query initially
 		String sqlQuery = "from Resultado res where 1 = 1";
 		// if not null set time parameters
@@ -63,6 +63,15 @@ public class ResultadoService {
 		}
 		if(!sampleType.equals("ALL")) {
 			sqlQuery = sqlQuery + " and res.sampleType=:sampleType";
+		}
+		if(!fluType.equals("ALL")) {
+			sqlQuery = sqlQuery + " and res.fluType=:fluType";
+		}
+		if(!antigen.equals("ALL")) {
+			sqlQuery = sqlQuery + " and res.antigen=:antigen";
+		}
+		if(!result.equals("ALL")) {
+			sqlQuery = sqlQuery + " and res.result=:result";
 		}
 		if(!usrResultado.equals("ALL")) {
 			sqlQuery = sqlQuery + " and res.usrResult.username=:usrResultado";
@@ -86,6 +95,15 @@ public class ResultadoService {
 		}
 		if(!sampleType.equals("ALL")) {
 			query.setParameter("sampleType", sampleType);
+		}
+		if(!fluType.equals("ALL")) {
+			query.setParameter("fluType", fluType);
+		}
+		if(!antigen.equals("ALL")) {
+			query.setParameter("antigen", antigen);
+		}
+		if(!result.equals("ALL")) {
+			query.setParameter("result", result);
 		}
 		if(!estado.equals("ALL")) {
 			
