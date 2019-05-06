@@ -81,7 +81,7 @@
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
-	                        	<input type="text" id="formName" name="formName" readonly value="firstEntry" class="form-control" placeholder="<spring:message code="idResult" />">
+	                        	<input type="text" id="formName" name="formName" readonly value="secondEntry" class="form-control" placeholder="<spring:message code="idResult" />">
 	                        </div>
 	                      </div>
 	                    </div>
@@ -102,7 +102,7 @@
 	                      <div class="col-md-10">
 	                      	<div class="input-prepend input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-	                        	<input type="text" id="resultDate" name="resultDate" value="${dateresult}" class="form-control date-picker" data-date-format="yyyy-mm-dd" data-date-end-date="+0d" placeholder="<spring:message code="resultDate" />">
+	                        	<input type="text" id="resultDate" readonly name="resultDate" value="${dateresult}" class="form-control date-picker" data-date-format="yyyy-mm-dd" data-date-end-date="+0d" placeholder="<spring:message code="resultDate" />">
 	                        	<span class="input-group-addon">yyyy-MM-dd</span>
 	                        </div>
 	                      </div>
@@ -110,9 +110,9 @@
 	                    
 	                    <div class="form-group row">
 	                      <label class="col-md-2 col-form-label">* <spring:message code="resultLab" />:</label>
-	                      <div class="col-md-10">
+	                      <div readonly class="col-md-10">
 	                      	<div>
-		                        <select name="resultLab" id="resultLab" class="form-control select2-single">
+		                        <select name="resultLab2" id="resultLab2" disabled class="form-control select2-single">
 		                        	<option value=""><spring:message code="empty"/></option>
 			                    	<c:forEach items="${labs}" var="lab">
 										<c:choose> 
@@ -127,6 +127,7 @@
 			                    </select>
 	                        </div>
 	                      </div>
+	                      <input type="text" readonly hidden id="resultLab" name="resultLab" autocomplete="resultLab" value="${resultadoAnterior.resultLab}" class="form-control">
 	                    </div>
 	                    
 	                    <div class="form-group row">
@@ -134,13 +135,13 @@
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-key"></i></span>
-	                        	<input type="text" id="sampleId" name="sampleId" autocomplete="sampleId" value="${resultadoAnterior.sampleId}" class="form-control" placeholder="<spring:message code="sampleId" />">
+	                        	<input type="text" readonly id="sampleId" name="sampleId" autocomplete="sampleId" value="${resultadoAnterior.sampleId}" class="form-control" placeholder="<spring:message code="sampleId" />">
 	                        </div>
 	                      </div>
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="sampleType" />:</label>
+	                      <label id="tmLabel" name="tmLabel" class="col-md-2 col-form-label"><spring:message code="sampleType" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="sampleType" id="sampleType" class="form-control select2-single">
@@ -162,7 +163,7 @@
 	                    
 	                    <div class="form-group row">
 	                      <fmt:formatDate value="${resultado.sampleDate}" var="datesample" pattern="yyyy-MM-dd" />
-	                      <label class="col-md-2 col-form-label"><spring:message code="sampleDate" />:</label>
+	                      <label id="fmLabel" name="fmLabel" class="col-md-2 col-form-label"><spring:message code="sampleDate" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-prepend input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -183,7 +184,7 @@
 	                    </div>
 					
 						<div class="form-group row">
-	                      <label class="col-md-2 col-form-label"> * <spring:message code="antigen" />:</label>
+	                      <label id="antLabel" name="antLabel" class="col-md-2 col-form-label"> * <spring:message code="antigen" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="antigen" id="antigen" class="form-control select2-single">
@@ -204,7 +205,7 @@
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"> * <spring:message code="res" />:</label>
+	                      <label id="resLabel" name="resLabel" class="col-md-2 col-form-label"> * <spring:message code="res" />:</label>
 	                      <div class="col-md-10">
 	                      	<div>
 		                        <select name="result" id="result" class="form-control select2-single">
@@ -225,7 +226,7 @@
 	                    </div>
 						
 						<div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="antigenAdditional" />:</label>
+	                      <label id="addLabel" name="addLabel" class="col-md-2 col-form-label"><spring:message code="antigenAdditional" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-sort-alpha-asc"></i></span>
@@ -235,7 +236,7 @@
 	                    </div>
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="file" />:</label>
+	                      <label id="fileLabel" name="fileLabel" class="col-md-2 col-form-label"><spring:message code="file" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-sort-alpha-asc"></i></span>
@@ -245,7 +246,7 @@
 	                    </div> 
 	                    
 	                    <div class="form-group row">
-	                      <label class="col-md-2 col-form-label"><spring:message code="obs" />:</label>
+	                      <label id="obsLabel" name="obsLabel" class="col-md-2 col-form-label"><spring:message code="obs" />:</label>
 	                      <div class="col-md-10">
 	                      	<div class="input-group">
 	                      		<span class="input-group-addon"><i class="fa fa-sort-alpha-asc"></i></span>
@@ -268,8 +269,16 @@
                           <a href="<spring:url value="/results/secondEntry/checkResult/" htmlEscape="true "/>" class="btn btn-danger"><i class="fa fa-sign-out"></i>&nbsp;<spring:message code="logout" /></a>
                         </div>
 	                    
-	                    
                       </form>
+                      <input type="text" readonly hidden id="sampleType2" name="sampleType2" autocomplete="sampleType2" value="${resultadoAnterior.sampleType}" class="form-control">
+                      <input type="text" readonly hidden id="sampleType2Desc" name="sampleType2Desc" autocomplete="sampleType2Desc" value="${tipoMuestra}" class="form-control">
+                      <fmt:formatDate value="${resultadoAnterior.sampleDate}" var="datesample2" pattern="yyyy-MM-dd" />
+                      <input type="text" readonly hidden id="sampleDate2" name="sampleDate2" autocomplete="sampleDate2" value="${datesample2}" class="form-control">
+                      <input type="text" readonly hidden id="antigen2" name="antigen2" autocomplete="antigen2" value="${resultadoAnterior.antigen}" class="form-control">
+                      <input type="text" readonly hidden id="result2" name="result2" autocomplete="result2" value="${resultadoAnterior.result}" class="form-control">
+                      <input type="text" readonly hidden id="antigenAdditional2" name="antigenAdditional2" autocomplete="antigenAdditional2" value="${resultadoAnterior.antigenAdditional}" class="form-control">
+                      <input type="text" readonly hidden id="file2" name="file2" autocomplete="file2" value="${resultadoAnterior.file}" class="form-control">
+                      <input type="text" readonly hidden id="obs2" name="obs2" autocomplete="obs2" value="${resultadoAnterior.obs}" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -284,7 +293,42 @@
 
       </div>
       <!-- /.conainer-fluid -->
-      
+      <!-- Modal -->
+  	  <div class="modal fade" id="modalValidar" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div id="titulo"><h2 class="modal-title"><spring:message code="diffentry" /></h2></div>
+				</div>
+				<div class="modal-body">
+					<div id="variableName">
+					</div>
+					<div id="cuerpo">
+					</div>
+					<div id="cuerpo2">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnTipoMuestra" class="btn btn-info" onclick="seleccionarEntradaTipoMuestra1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnFechaMuestra" class="btn btn-info" onclick="seleccionarEntradaFechaMuestra1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnAntigeno" class="btn btn-info" onclick="seleccionarEntradaAntigeno1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnResultado" class="btn btn-info" onclick="seleccionarEntradaResultado1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnAntAdicional" class="btn btn-info" onclick="seleccionarEntradaAntAdicional1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnFile" class="btn btn-info" onclick="seleccionarEntradaFile1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnObs" class="btn btn-info" onclick="seleccionarEntradaObs1()"><spring:message code="select1entry" /></button>
+					<button type="button" id="btnTipoMuestra2" class="btn btn-warning" onclick="seleccionarEntradaTipoMuestra2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnFechaMuestra2" class="btn btn-warning" onclick="seleccionarEntradaFechaMuestra2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnAntigeno2" class="btn btn-warning" onclick="seleccionarEntradaAntigeno2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnResultado2" class="btn btn-warning" onclick="seleccionarEntradaResultado2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnAntAdicional2" class="btn btn-warning" onclick="seleccionarEntradaAntAdicional2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnFile2" class="btn btn-warning" onclick="seleccionarEntradaFile2()"><spring:message code="select2entry" /></button>
+					<button type="button" id="btnObs2" class="btn btn-warning" onclick="seleccionarEntradaObs2()"><spring:message code="select2entry" /></button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+	    </div>
+	  <!-- /.modal-dialog -->
+	  </div>
       
 	  
     </main>
@@ -337,16 +381,24 @@
 <c:set var="waitmessage"><spring:message code="process.wait" /></c:set>
 <c:set var="dataEntry2FinishedAlert"><spring:message code="dataEntry2FinishedAlert" /></c:set>
 <c:set var="blank"><spring:message code="empty" /></c:set>
+<c:set var="entry1"><spring:message code="entry1" /></c:set>
+<c:set var="entry2"><spring:message code="entry2" /></c:set>
+<c:set var="selectedentry1"><spring:message code="selectedentry1" /></c:set>
+<c:set var="selectedentry2"><spring:message code="selectedentry2" /></c:set>
+<c:set var="difentrycorrected"><spring:message code="difentrycorrected" /></c:set>
 
 
 <script>
 	jQuery(document).ready(function() {
 		var parametros = {saveResultUrl: "${saveResultUrl}", successmessage: "${successmessage}",
 				errormessage: "${errormessage}",waitmessage: "${waitmessage}", lenguaje: "${lenguaje}", dataEntry2FinishedAlert: "${dataEntry2FinishedAlert}"
-					,blank: "${blank}"
+					,blank: "${blank}",entry1: "${entry1}",entry2: "${entry2}", selectedentry1: "${selectedentry1}", selectedentry2: "${selectedentry2}" , selectedentry2: "${selectedentry2}", difentrycorrected: "${difentrycorrected}"
 		};
-		ProcessResultado.init(parametros);
+		ponerValorParametros(parametros);
+		ProcessResultado.init();
+		hideBotones();
 	});
+	  
 </script>
   
 </body>

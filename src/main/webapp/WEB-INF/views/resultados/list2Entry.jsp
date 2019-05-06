@@ -78,6 +78,8 @@
 		                		<th><spring:message code="sampleId" /></th>
 			                    <th><spring:message code="resultDate" /></th>
 			                    <th><spring:message code="resultLab" /></th>
+			                    <th><spring:message code="fluType" /></th>
+			                    <th><spring:message code="antigen" /></th>
 			                    <th><spring:message code="status" /></th>
 			                    <th><spring:message code="usrResult" /></th>
 			                    <th><spring:message code="pasivo" /></th>
@@ -95,6 +97,8 @@
 		                            <td><c:out value="${resultado.sampleId}" /></td>
 		                            <td><c:out value="${resultado.resultDate}" /></td>
 		                            <td><c:out value="${resultado.resultLab}" /></td>
+		                            <td><c:out value="${resultado.fluType}" /></td>
+		                            <td><c:out value="${resultado.antigen}" /></td>
 		                            <td><c:out value="${resultado.estado}" /></td>		                            
 		                            <td><c:out value="${resultado.usrResult}" /></td>
 		                            <td><c:out value="${resultado.pasive}" /></td>

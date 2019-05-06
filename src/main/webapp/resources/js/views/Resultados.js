@@ -135,47 +135,6 @@ return {
 		  		});
 	}
   
-  $('#resultDate').on('keydown',function(event){
-	  	event.stopImmediatePropagation();
-		    if( event.which == 13 ){
-		        event.preventDefault();
-		        $('#resultLab').focus();
-	  			$('#resultLab').select2('open');
-		    }
-	  });
-  
-  $('#resultLab').on(
-		    'select2:close',
-		    function () {
-		    	$('#sampleId').focus();
-		    }
-		);
-  
-  $('#sampleId').on('keydown',function(event){
-	  	event.stopImmediatePropagation();
-		    if( event.which == 13 ){
-		        event.preventDefault();
-	  			$('#sampleType').focus();
-	  			$('#sampleType').select2('open');
-		    }
-	  });
-  
-  $('#sampleType').on(
-		    'select2:close',
-		    function () {
-		    	$('#sampleDate').focus();
-		    }
-		);
-  
-  
-  $('#obs').on('keydown',function(event){
-  	event.stopImmediatePropagation();
-	    if( event.which == 13 ){
-	        event.preventDefault();
-  			$('#finalize').focus();
-	    }
-  });
-  
   $('#finalize').change(function() {
       if(this.checked) {
       	alert(parametros.dataEntry1FinishedAlert);

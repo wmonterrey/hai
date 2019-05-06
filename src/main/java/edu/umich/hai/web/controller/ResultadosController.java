@@ -233,9 +233,9 @@ public class ResultadosController {
     @RequestMapping(value = "/secondEntry/editResult/{idResult}/", method = RequestMethod.GET)
 	public String initUpdate2ResultForm(@PathVariable("idResult") String idResult, Model model) {
     	Resultado resultadoAnterior = this.resultadoService.getResultado(idResult);
-		if(resultadoAnterior!=null && resultadoAnterior.getPasive()=='0' && (resultadoAnterior.getEstado()=='1' || resultadoAnterior.getEstado()=='2')){
+    	
+		if(resultadoAnterior==null || resultadoAnterior.getPasive()=='0' || !(resultadoAnterior.getEstado()=='1' || resultadoAnterior.getEstado()=='2')){
 			Resultado resultado;
-			model.addAttribute("resultadoAnterior", resultadoAnterior);
 			if(resultadoAnterior.getEstado()=='1') {
 				resultado = new Resultado();
 				resultado.setIdResult(idResult);
@@ -251,6 +251,11 @@ public class ResultadosController {
 	    	model.addAttribute("labs", labs);
 	    	List<MessageResource> antigenos = null;
 	    	String tipoFlu = resultadoAnterior.getFluType();
+	    	String tipoMuestra = "";
+	    	MessageResource mr = this.messageResourceService.getMensaje(resultadoAnterior.getSampleType(),"CAT_SMP");
+	    	if(mr!=null) {
+	    		tipoMuestra = (LocaleContextHolder.getLocale().getLanguage().equals("en")) ? mr.getEnglish(): mr.getSpanish();
+	    	}
 	    	if(tipoFlu.equals("H1N1")) {
 	    		antigenos = messageResourceService.getCatalogo("CAT_H1N1");
 	    	} else if(tipoFlu.equals("H3N2")) {
@@ -260,6 +265,8 @@ public class ResultadosController {
 	    	}
 	    	model.addAttribute("antigenos", antigenos);
 	    	model.addAttribute("resultado", resultado);
+	    	model.addAttribute("tipoMuestra", tipoMuestra);
+	    	model.addAttribute("resultadoAnterior", resultadoAnterior);
 			return "resultados/editForm2";
 		}
 		else{
@@ -331,7 +338,6 @@ public class ResultadosController {
 			else if(formName.matches("secondEntry") && finalize) {
 				resultado.setEstado('3');
 			}
-			
 			
 			WebAuthenticationDetails wad  = (WebAuthenticationDetails) authentication.getDetails();
 			resultado.setDeviceid(wad.getRemoteAddress());

@@ -16,6 +16,9 @@
 <!-- BlockUI-->
 <spring:url value="/resources/vendors/js/jquery.blockUI.js" var="BlockUI" />
 <script src="${BlockUI}" type="text/javascript"></script>
+<!-- Confirm-->
+<spring:url value="/resources/vendors/js/jquery-confirm.min.js" var="jConfirm" />
+<script src="${jConfirm}" type="text/javascript"></script>
 <!-- Toast-->
 <spring:url value="/resources/vendors/js/toastr.min.js" var="ToastR" />
 <script src="${ToastR}" type="text/javascript"></script>

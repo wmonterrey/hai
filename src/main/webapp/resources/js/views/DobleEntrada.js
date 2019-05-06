@@ -10,21 +10,23 @@ var ProcessResultado = function () {
 	    }
 	};
 	
+	
 return {
   //main function to initiate the module
   init: function (parametros) {	
-	  $('#sampleId').focus();
+	  $('#resultDate').focus();
   
   handleDatePickers(parametros.lenguaje);	 
-  $('#sampleType, #resultLab, #antigen, #result').select2({
+  $('#sampleType, #resultLab2, #antigen, #result').select2({
 	    theme: "bootstrap",
 	    width: '100%'
 });
+ 
   
 
   $.validator.setDefaults( {
     submitHandler: function () {
-    	processResultado();
+    	verificarEntradas();
     }
   } );
 
@@ -87,9 +89,43 @@ return {
     }
   });
       
-  });
+  });  
   
-  function processResultado(){
+  
+  function verificarEntradas() {
+	  verificarTipoMuestra();
+  }
+  
+  function verificarTipoMuestra(){
+	  if($('#sampleType').val()!=$('#sampleType2').val()){
+		  var nuevaEntrada = $('#sampleType').select2('data');
+		  $('#variableName').html('<h3>'+$('#tmLabel').text() +'</h3>');
+		  $('#cuerpo').html('<h4>'+parametros.entry1+': '+$('#sampleType2Desc').val() +'</h4>');
+		  $('#cuerpo2').html('<h4>'+parametros.entry2+': '+nuevaEntrada[0].text +'</h4>');
+		  $('#btnTipoMuestra').show();
+		  $('#btnTipoMuestra2').show();
+		  $('#modalValidar').modal('show');
+	  }
+	  else{
+		  verificarFechaMuestra();
+	  }
+	}
+  
+  function verificarFechaMuestra(){
+	  if($('#sampleDate').val()!=$('#sampleDate2').val()){
+		  $('#variableName').html('<h3>'+$('#fmLabel').text() +'</h3>');
+		  $('#cuerpo').html('<h4>'+parametros.entry1+': '+$('#sampleDate2').val() +'</h4>');
+		  $('#cuerpo2').html('<h4>'+parametros.entry2+': '+$('#sampleDate').val() +'</h4>');
+		  $('#btnFechaMuestra').show();
+		  $('#btnFechaMuestra2').show();
+		  $('#modalValidar').modal('show');
+	  }
+	  else{
+		  saveTheResult();
+	  }
+	}
+  
+  function saveTheResult(){
 	  $.blockUI({ message: parametros.waitmessage });
 	    $.post( parametros.saveResultUrl
 	            , $( 'form' ).serialize()
@@ -107,9 +143,9 @@ return {
 					else{
 						var mensaje = resultado.sampleId + '</br>' + resultado.resultLab + '</br>' + resultado.resultDate;
 						toastr.success(mensaje, parametros.successmessage, {
-    					    closeButton: true,
-    					    progressBar: true,
-    					  });
+  					    closeButton: true,
+  					    progressBar: true,
+  					  });
 						$.unblockUI();
 					}
 	            }
@@ -118,15 +154,16 @@ return {
 		    		alert( "error:" + errorThrown);
 		    		$.unblockUI();
 		  		});
-	}
-  
+	    $.unblockUI();
+  }
   
   $('#finalize').change(function() {
       if(this.checked) {
-      	alert(parametros.dataEntry1FinishedAlert);
+      	alert(parametros.dataEntry2FinishedAlert);
       }      
   });
 
   }
  };
+ 
 }();

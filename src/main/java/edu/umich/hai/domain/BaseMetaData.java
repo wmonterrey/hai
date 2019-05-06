@@ -85,6 +85,7 @@ public class BaseMetaData implements Serializable
 	public void setEstado(char estado) {
 		this.estado = estado;
 	}
+	
 
 	@Column(name="IDENTIFICADOR_EQUIPO", length = 100)
 	public String getDeviceid() {
