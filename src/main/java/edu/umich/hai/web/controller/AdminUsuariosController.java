@@ -140,6 +140,7 @@ public class AdminUsuariosController {
 	        , @RequestParam( value="password", required=false, defaultValue="" ) String password
 	        , @RequestParam( value="email", required=true, defaultValue="" ) String email
 	        , @RequestParam( value="roles", required=false, defaultValue="") List<String> authorities
+	        , @RequestParam( value="checkChgPass", required=false, defaultValue="") String checkChgPass
 	        )
 	{
     	Gson gson = new Gson();
@@ -157,6 +158,12 @@ public class AdminUsuariosController {
 	    		user.setModified(new Date());
 	    		user.setModifiedBy(usuarioActual.getUsername());
 	    		user.setLastCredentialChange(new Date());
+	    		if(checkChgPass.equals("checkChgPass")) {
+					user.setChangePasswordNextLogin(true);
+				}
+				else {
+					user.setChangePasswordNextLogin(false);
+				}
 	    		StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 	    		String encodedPass = encoder.encode(password);
 	    		user.setPassword(encodedPass);

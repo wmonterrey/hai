@@ -112,6 +112,14 @@
 		                      </c:forEach>
 		                    </select>
 	                    </div>
+	                    
+	                    <div class="form-group">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" id="checkChgPass" name="checkChgPass" value="checkChgPass"> <spring:message code="ask.chgpass" />
+                            </label>
+                          </div>
+                        </div>
                         
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary" id="guardar"><i class="fa fa-save"></i>&nbsp;<spring:message code="save" /></button>
