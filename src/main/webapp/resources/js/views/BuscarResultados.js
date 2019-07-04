@@ -133,6 +133,7 @@ return {
 	  $.blockUI({ message: parametros.waitmessage });
 	  $.getJSON(parametros.searchUrl, $('#resultados-form').serialize(), function(data) {
 		  var table1 = $('#resultados').DataTable({
+			  dom: 'lBfrtip',
 	          "oLanguage": {
 	              "sUrl": parametros.dataTablesLang
 	          },
@@ -140,7 +141,17 @@ return {
 	          "bInfo": true, 
 	          "bPaginate": true, 
 	          "bDestroy": true,
-	          "responsive": true
+	          "responsive": true,
+	          "buttons": [
+	              {
+	                  extend: 'excel'
+	              },
+	              {
+	                  extend: 'pdfHtml5',
+	                  orientation: 'landscape',
+	                  pageSize: 'LEGAL'
+	              }
+	          ]
 	      });
 		  table1.clear().draw();
 		if (data == ''){
