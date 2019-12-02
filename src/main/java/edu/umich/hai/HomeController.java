@@ -44,7 +44,7 @@ import edu.umich.hai.users.model.UserSistema;
  * <li>Pagina de Salida
  * <li>No autorizado
  * <li>No encontrado
- * <li>Reset contraseÒa
+ * <li>Reset contrase√±a
  * </ul>
  * 
  * @author William Aviles
@@ -103,9 +103,9 @@ public class HomeController {
 			String url = scheme + "://" + host + contextPath + "/processToken?id=" + 
 				      user.getUsername() + "&token=" + token;
 			String mensaje = " " + user.getCompleteName() + "\n\n"
-		                + "El enlace para recuperar su contraseÒa es: \n\n"
+		                + "El enlace para recuperar su contrase√±a es: \n\n"
 		                + url + "\n\n"
-		                + "Este enlace ser· v·lido por 24 horas. Favor no contestar este mensaje";
+		                + "Este enlace ser√° v√°lido por 24 horas. Favor no contestar este mensaje";
 			emailServiceImpl.sendEmail(user.getEmail(), "no-reply", "Reset password Sistema Hai",mensaje);
 			genericResponse = new GenericResponse("success", user.getCompleteName() + ", por favor revise su correo / please check your email, " + user.getEmail());
 			

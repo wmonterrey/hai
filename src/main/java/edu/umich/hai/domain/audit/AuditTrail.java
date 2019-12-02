@@ -3,24 +3,24 @@ package edu.umich.hai.domain.audit;
 import java.util.Date;
 
 /**
- * AuditTrail es la clase que representa el registro de auditoría en el sistema.
+ * AuditTrail es la clase que representa el registro de auditorÃ­a en el sistema.
  * 
- * AuditTrail incluye información como:
+ * AuditTrail incluye informaciÃ³n como:
  * 
  * <ul>
  * <li>Clase
  * <li>Propiedad
  * <li>Valor anterior
  * <li>Valor actual
- * <li>Tipo de operación
+ * <li>Tipo de operaciÃ³n
  * <li>Usuario
- * <li>Fecha de operación
+ * <li>Fecha de operaciÃ³n
  * </ul>
  * <p>
  * 
  * 
  *  
- * @author      William Avilés
+ * @author      William AvilÃ©s
  * @version     1.0
  * @since       1.0
  */

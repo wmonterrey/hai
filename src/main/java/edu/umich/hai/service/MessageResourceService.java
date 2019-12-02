@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.umich.hai.language.MessageResource;
 
 /**
- * Servicio para el objeto MessageResource utilizado para manejo de idiomas (localización)
+ * Servicio para el objeto MessageResource utilizado para manejo de idiomas (localizaciÃ³n)
  * 
  * @author William Aviles
  * 

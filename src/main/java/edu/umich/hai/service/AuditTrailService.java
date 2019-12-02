@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Servicio para el objeto AuditTrail (Bit·cora)
+ * Servicio para el objeto AuditTrail (Bit√°cora)
  * 
  * @author William Aviles
  * 

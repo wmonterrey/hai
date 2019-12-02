@@ -14,20 +14,20 @@ import edu.umich.hai.domain.audit.Auditable;
 /**
  * MessageResource es la clase que representa el registro de catalogos y mensajes en el sistema.
  * 
- * MessageResource incluye información como:
+ * MessageResource incluye informaciÃ³n como:
  * 
  * <ul>
  * <li>Clave del mensaje
  * <li>Catalogo al que pertenece
  * <li>Clave del catalogo
- * <li>Valor en español
- * <li>Valor en inglés
+ * <li>Valor en espaÃ±ol
+ * <li>Valor en inglÃ©s
  * </ul>
  * <p>
  * 
  * 
  *  
- * @author      William Avilés
+ * @author      William AvilÃ©s
  * @version     1.0
  * @since       1.0
  */

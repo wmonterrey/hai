@@ -106,7 +106,7 @@ public class AdminCatalogosController {
      * Controlador para guardar un mensaje.
      * 
      * @param messageKey el identificador del mensaje a guardar
-     * @param spanish mensaje en español
+     * @param spanish mensaje en espaÃ±ol
      * @param english mensaje en ingles
      * @param isCat si es catalogo o no
      * @param pasive si la respuesta esta de baja

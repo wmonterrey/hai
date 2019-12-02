@@ -1,9 +1,9 @@
 package edu.umich.hai.domain.audit;
 
 /**
- * Auditable es la interface que todas las clases deben implementar para ser parte de la auditoría en el sistema.
+ * Auditable es la interface que todas las clases deben implementar para ser parte de la auditorÃ­a en el sistema.
  *  
- * @author      William Avilés
+ * @author      William AvilÃ©s
  * @version     1.0
  * @since       1.0
  */
